@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+#define ll long long
+#define db double
+#define FOR(i,l,r) for ( int i = l ; i <= r ; i++ )
+#define FOD(i,l,r) for ( int i = l ; i >= r ; i-- )
+   
+    std::set<std::vector<int>> visited;
+    std::vector<int>noderoot;
+    void dfs ( std::vector<int>node )
+    {
+    visited.insert(node);
+    std::cout << node[0] << " " << node[1] << " " << node[2] << std::endl;
+    while(1){
+    if ( node[1] == 2 || node[2] == 2 ) break;
+    for (int i = 0; i <= 2 ; i++) 
+    {
+        int maxv;
+        for (int j = 0 ; j <= 2 ; j++)
+        {
+            if (j == 0) maxv = 10;
+            else {
+                if (j == 1) maxv = 7;
+                else maxv = 4;
+            }
+            if (i != j && node[i] > 0 && node[j] < maxv) 
+            {
+                int luongnuocdo =std::min(node[i],maxv - node[j]);
+                std::vector<int> nodenext(3);
+                nodenext[i] = node[i] - luongnuocdo;
+                nodenext[j] = node[j] + luongnuocdo;
+                nodenext[3 - i - j] = node[3 - i - j];
+                
+                if (visited.find(nodenext) == visited.end()) dfs(nodenext);
+                
+            }
+        }
+    }
+}
+}
+
+int main(){
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cout.tie(NULL);
+    noderoot.push_back(0);
+    noderoot.push_back(7);
+    noderoot.push_back(4);
+    dfs(noderoot);
+    return 0;
+}
